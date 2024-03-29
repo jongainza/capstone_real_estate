@@ -1,11 +1,4 @@
-﻿-- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
--- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
-
--- Modify this code to update the DB schema diagram.
--- To reset the sample schema, replace everything with
--- two dots ('..' - without quotes).
-
-DROP DATABASE IF EXISTS real_estate_db;
+﻿DROP DATABASE IF EXISTS real_estate_db;
 
 CREATE DATABASE real_estate_db;
 
@@ -69,3 +62,26 @@ CREATE TABLE transaction (
 
 
 
+INSERT INTO users 
+(username,email,password_hash,auth_token,registration_date)
+VALUES
+('jon','jon@gmail.com','jon','jon','2024-03-27'),
+('blanca','blanca@gmail.com','blanca','blanca','2020-02-27'),
+('kerman','kerman@gmail.com','kerman','kerman','2021-05-27'),
+('star','star@gmail.com','star','star','2019-10-27');
+
+
+INSERT INTO property
+(title,info,street,_number,city,_state,country,zip_code,price,area,bedrooms,bathrooms,image_url,user_id)
+VALUES
+('beutiful house','remodeled house in hystoric district','persifer',1007,'Folsom','California','USA',95630,500000,'hystoric folsom',2,1,'asfaslfal;sf',1),
+('american dream','all you can imagine','maple',3005,'Oakland','California','USA',95612,10000000,'laurel district',2,1,'sdghdsgfd',2),
+('kermans playground','kermans fan area','ridley',23,'Orangevale','California','USA',95814,250000000,'nicest neighbourhood',1,1,'sdgsdggdvas',3),
+('retreat house','beutiful pool','linda ave',696,'Oakland','California','USA',95616,30000000,'piedmont',4,3,'dsgsdfsa',4),
+('mans cave','beutiful hause with men dreamed garage','bizkaia',14,'Barakaldp','Vizcaya','Spain' ,94140,500000,'centro',4,3,'asdgdsg',1);
+
+
+INSERT INTO bid
+(amount,bid_date,user_id,property_id)
+VALUES
+(5000000,'2021-05-27',1,1);

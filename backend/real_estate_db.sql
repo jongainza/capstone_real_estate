@@ -8,11 +8,10 @@ CREATE DATABASE real_estate_db;
 
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    username TEXT  NOT NULL,
-    email TEXT   NOT NULL,
-    password_hash TEXT  NOT NULL,
-    auth_token TEXT   NOT NULL,
-    registration_date DATE   NOT NULL
+    username TEXT  NOT NULL UNIQUE,
+    email TEXT   NOT NULL UNIQUE,
+    password TEXT  NOT NULL,
+    registration_date timestamp with time zone   NOT NULL
    
     
 );
@@ -23,9 +22,9 @@ CREATE TABLE property (
     title TEXT   NOT NULL,
     info TEXT   NOT NULL,
     street TEXT   NOT NULL,
-    _number TEXT   NOT NULL,
+    number TEXT   NOT NULL,
     city TEXT   NOT NULL,
-    _state TEXT   NOT NULL,
+    state TEXT   NOT NULL,
     country TEXT   NOT NULL,
     zip_code INTEGER   NOT NULL,
     price INTEGER   NOT NULL,
@@ -63,16 +62,16 @@ CREATE TABLE transaction (
 
 
 INSERT INTO users 
-(username,email,password_hash,auth_token,registration_date)
+(username,email,password,registration_date)
 VALUES
-('jon','jon@gmail.com','jon','jon','2024-03-27'),
-('blanca','blanca@gmail.com','blanca','blanca','2020-02-27'),
-('kerman','kerman@gmail.com','kerman','kerman','2021-05-27'),
-('star','star@gmail.com','star','star','2019-10-27');
+('jon','jon@gmail.com','jon','2024-03-27'),
+('blanca','blanca@gmail.com','blanca','2020-02-27'),
+('kerman','kerman@gmail.com','kerman','2021-05-27'),
+('star','star@gmail.com','star','2019-10-27');
 
 
 INSERT INTO property
-(title,info,street,_number,city,_state,country,zip_code,price,area,bedrooms,bathrooms,image_url,user_id)
+(title,info,street,number,city,state,country,zip_code,price,area,bedrooms,bathrooms,image_url,user_id)
 VALUES
 ('beutiful house','remodeled house in hystoric district','persifer',1007,'Folsom','California','USA',95630,500000,'hystoric folsom',2,1,'asfaslfal;sf',1),
 ('american dream','all you can imagine','maple',3005,'Oakland','California','USA',95612,10000000,'laurel district',2,1,'sdghdsgfd',2),

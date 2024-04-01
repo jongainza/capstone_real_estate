@@ -1,13 +1,17 @@
 const express = require("express");
 
-const app = express();
 const ExpressError = require("./expressError");
+const app = express();
 
 // Parse request bodies for JSON
 app.use(express.json());
 
-const uRoutes = require("./routes/users");
-app.use("/users", uRoutes);
+const testRouter = require("./routes/example");
+const userRouter = require("./routes/user.route");
+const authRouter = require("./routes/auth.route");
+app.use("/api/user", userRouter);
+app.use("/api/test", testRouter);
+app.use("/api/auth", authRouter);
 
 // 404 handler
 app.use(function (req, res, next) {

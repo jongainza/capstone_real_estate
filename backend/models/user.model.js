@@ -12,7 +12,7 @@ class User {
 
   static async register(username, email, password) {
     try {
-      const hashedPassword = await bcrypt.hash(password, bcrypt);
+      const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
       console.log(hashedPassword);
       console.log(username);
       const response = await db.query(

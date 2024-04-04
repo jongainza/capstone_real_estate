@@ -4,7 +4,11 @@ import { BiSolidSearch } from "react-icons/bi";
 export default function Header() {
   return (
     <div>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <nav
+        class="navbar navbar-expand-lg bg-dark"
+        sticky="top"
+        data-bs-theme="dark"
+      >
         <div class="container-fluid flex">
           <a class="navbar-brand" href="/">
             <img

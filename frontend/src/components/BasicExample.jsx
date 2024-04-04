@@ -2,27 +2,38 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { BiSolidSearch } from "react-icons/bi";
 
 function BasicExample() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <Container fluid>
+        <Navbar.Brand href="#home" className="mr-auto">
+          React-Bootstrap
+        </Navbar.Brand>
+        <div className="d-flex align-items-center justify-content-center flex-grow-1">
+          <form className="d-flex" role="search">
+            <input
+              className="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button className="btn btn-outline-success" type="submit">
+              <BiSolidSearch />
+            </button>
+          </form>
+        </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+          <Nav className="ms-auto">
+            <Nav.Link href="/">Home</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="/register">Register</NavDropdown.Item>
+              <NavDropdown.Item href="/signin">SignIn</NavDropdown.Item>
+              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              <NavDropdown.Item href="/about">About</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

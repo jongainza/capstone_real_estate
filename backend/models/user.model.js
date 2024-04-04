@@ -33,12 +33,15 @@ class User {
 
   static async authenticate(username, password) {
     const results = await db.query(
-      `SELECT password FROM users WHERE username=$1`,
+      `SELECT username,password FROM users WHERE username=$1`,
       [username]
     );
     const user = results.rows[0];
-    const response = await bcrypt.compare(password, user.password);
-    return user && response;
+    if (user) {
+      const response = await bcrypt.compare(password, user.password);
+      return user && response;
+    }
+    throw new ExpressError("User not found");
   }
 
   /** Update last_login_at for user */

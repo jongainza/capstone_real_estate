@@ -14,10 +14,12 @@ const register = async (req, res, next) => {
     await User.register(username, email, password);
     // User.updateRegisterTimestamp(username);
     const token = jwt.sign({ username }, SECRET_KEY);
-    return res.status(201).json({ message: "You are registered", token });
+    return res
+      .status(201)
+      .json({ success: true, message: "You are registered", token });
     // return res.json({ message: "You are registered" });
-  } catch (e) {
-    return next(e);
+  } catch (error) {
+    return next(error);
   }
 };
 
@@ -25,11 +27,12 @@ const signIn = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      throw new ExpressError("User/Password required", 404);
+      throw new ExpressError("User/Password required", 400);
     }
     if (await User.authenticate(username, password)) {
       let _token = jwt.sign({ username }, SECRET_KEY);
       return res.json({
+        success: true,
         message: "You are logged in",
         username,
         _token,

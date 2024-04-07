@@ -1,12 +1,14 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "/helpers/axios.config";
 
 export default function Register() {
   const [data, setData] = useState({});
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setData({
       ...data,
@@ -19,12 +21,18 @@ export default function Register() {
     e.preventDefault();
     try {
       const response = await axios.post("/auth/register", data);
-      console.log(response.data);
+      if (response.data.success) {
+        // Registration was successful, navigate to the desired page
+        navigate("/signin");
+      } else {
+        // Registration failed, display the error message
+        setError(response.data.message);
+      }
     } catch (error) {
+      // Handle network errors or other issues
       console.error("Error:", error);
     }
   };
-
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>Register</h1>
@@ -60,7 +68,7 @@ export default function Register() {
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          SIGN UP
+          REGISTER
         </Button>
       </Form>
       <div style={{ display: "flex", margin: 10 }}>
@@ -69,6 +77,7 @@ export default function Register() {
           <span>SignIn</span>
         </Link>
       </div>
+      <div>{error && <p style={{ color: "red" }}>{error}</p>}</div>
     </div>
   );
 }

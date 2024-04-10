@@ -4,10 +4,12 @@ import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "/helpers/axios.config";
+import OAuth from "../components/OAuth";
 
 export default function Register() {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
     setData({
@@ -20,15 +22,19 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post("/auth/register", data);
       if (response.data.success) {
+        setLoading(false);
         // Registration was successful, navigate to the desired page
         navigate("/signin");
       } else {
+        setLoading(false);
         // Registration failed, display the error message
         setError(response.data.message);
       }
     } catch (error) {
+      setLoading(false);
       // Handle network errors or other issues
       console.error("Error:", error);
     }
@@ -67,17 +73,33 @@ export default function Register() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          REGISTER
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={loading}
+          style={{ width: "100%" }} // Set button width to 100%
+        >
+          {loading ? "...loading" : "register"}
         </Button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "10px",
+          }}
+        >
+          <OAuth style={{ width: "100%" }} />
+        </div>
       </Form>
-      <div style={{ display: "flex", margin: 10 }}>
-        <p>Have an account?</p>
-        <Link to="/signin" style={{ marginLeft: "5px" }}>
-          <span>SignIn</span>
-        </Link>
+
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
+      >
+        <p>
+          Have an account? <Link to="/signin">Sign In</Link>
+        </p>
       </div>
-      <div>{error && <p style={{ color: "red" }}>{error}</p>}</div>
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
     </div>
   );
 }

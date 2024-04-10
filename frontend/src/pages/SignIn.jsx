@@ -4,11 +4,20 @@ import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "/helpers/axios.config";
+import { useDispatch } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export default function signIn() {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setData({
       ...data,
@@ -32,17 +41,21 @@ export default function signIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post("/auth/signin", data);
       if (response.data.success) {
+        dispatch(signInSuccess(response.data));
         // Registration was successful, navigate to the desired page
         navigate("/");
       } else {
+        dispatch(signInFailure(response.data.message));
         // Registration failed, display the error message
         setError(response.data.message);
       }
     } catch (error) {
+      setLoading(false);
       // Handle network errors or other issues
-      console.error("Error:", error);
+      dispatch(signInFailure(error.message));
     }
   };
   return (
@@ -67,11 +80,21 @@ export default function signIn() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          SIGN IN
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={loading}
+          style={{ width: "100%" }} // Set button width to 100%
+        >
+          {loading ? "...loading" : "Log In"}
         </Button>
+        <div style={{ marginTop: "10px" }}>
+          <OAuth />
+        </div>
       </Form>
-      <div style={{ display: "flex", margin: 10 }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
+      >
         <p>Dont have an account?</p>
         <Link to="/register" style={{ marginLeft: "5px" }}>
           <span>Register</span>

@@ -7,6 +7,9 @@ const DB_URI =
 
 const SECRET_KEY = process.env.SECRET_KEY || "secret";
 
+const default_photo_url =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXHJLVTn98FZ-mf3ETMUWhP8Q5qKetQX5GnOBK55Xl8iftBIHPGxT5rxeMlg&s";
+
 const BCRYPT_WORK_FACTOR = 12;
 
 module.exports = {
